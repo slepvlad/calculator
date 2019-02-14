@@ -25,7 +25,9 @@ class Calculate {
     }
 
     private void parseOperation(String str){
-        if(stack.isEmpty()){stack.push(str);}
+        if(stack.isEmpty()){
+            stack.push(str);
+        }
         else{
             while (!stack.isEmpty() && (priority(str)>= priority(stack.peek()))){
                 output.add(stack.pop());

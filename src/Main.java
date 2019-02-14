@@ -27,11 +27,11 @@ public class Main {
     private static boolean isValid(String str){
         str = str.trim();
         if(str.length() == 0){ return false;}
-        Matcher isCorrect = PATTERN_LETTER.matcher(str);
-        Matcher isSymbol = START_END_SYMBOL.matcher(str);
+        Matcher isHasWrongSymbols = PATTERN_LETTER.matcher(str);
+        if(isHasWrongSymbols.find()){return false;}
+        Matcher isHasStartOrEndNotDigital = START_END_SYMBOL.matcher(str);
+        if(isHasStartOrEndNotDigital.find()){return false;}
         Matcher isTwoOrMoreOperations = TWO_OR_MORE_OPERATION.matcher(str);
-        if(isCorrect.find()){return false;}
-        if(isSymbol.find()){return false;}
         if(isTwoOrMoreOperations.find()){return false;}
 
         return true;
