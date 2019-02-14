@@ -6,7 +6,7 @@ public class Main {
 
     private static final Pattern PATTERN_LETTER = Pattern.compile("[А-Я]|[а-я]|[A-Z]|[a-z]|[\\(\\)\\~\\@\\#\\$\\%\\^\\&\\_\\=\\.\\,\\?\\:\\;\\'\\|]");
     private static final Pattern START_END_SYMBOL = Pattern.compile("^\\D|\\D$");
-    private static final Pattern TWO_OR_MORE_OREPATION = Pattern.compile("[\\+\\-\\/\\*]{2,}");
+    private static final Pattern TWO_OR_MORE_OPERATION = Pattern.compile("[\\+\\-\\/\\*]{2,}");
 
     public static void main(String[] arg){
 
@@ -29,7 +29,7 @@ public class Main {
         if(str.length() == 0){ return false;}
         Matcher isCorrect = PATTERN_LETTER.matcher(str);
         Matcher isSymbol = START_END_SYMBOL.matcher(str);
-        Matcher isTwoOrMoreOperations = TWO_OR_MORE_OREPATION.matcher(str);
+        Matcher isTwoOrMoreOperations = TWO_OR_MORE_OPERATION.matcher(str);
         if(isCorrect.find()){return false;}
         if(isSymbol.find()){return false;}
         if(isTwoOrMoreOperations.find()){return false;}
