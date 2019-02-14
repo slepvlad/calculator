@@ -3,7 +3,8 @@ import java.util.*;
 class Calculate {
     private static String operation = "+-/*";
     private String incoming;
-
+    private List<String> output = new ArrayList<>();
+    private Deque<String> stack = new ArrayDeque<>();
 
     Calculate(String incoming) {
         this.incoming = incoming;
@@ -24,35 +25,40 @@ class Calculate {
         return 3;
     }
 
-
-    private List<String> parse(){
-        List<String> output = new ArrayList<>();
-        Deque<String> stack = new ArrayDeque<>();
-        StringTokenizer tokenizer = new StringTokenizer(incoming, operation, true);
-        String current;
-        while (tokenizer.hasMoreTokens()){
-
-            current = tokenizer.nextToken();
-            if(current.equals(" ")){
-                continue;
+    private void parseOperation(String str){
+        if(stack.isEmpty()){stack.push(str);}
+        else{
+            while (!stack.isEmpty() && (priority(str)>= priority(stack.peek()))){
+                output.add(stack.pop());
             }
-            if(isOperation(current)){
-                if(stack.isEmpty()){stack.push(current);}
-                else{
-                    while (!stack.isEmpty() && (priority(current)>= priority(stack.peek()))){
-                        output.add(stack.pop());
-                    }
-                    stack.push(current);
-                }
-                continue;
-            }
-            output.add(current);
+            stack.push(str);
         }
+
+    }
+
+    private void toEmptyStack(){
         while (!stack.isEmpty()){
             output.add(stack.pop());
         }
-        return output;
+    }
 
+
+    private List<String> parse(){
+
+        StringTokenizer tokenizer = new StringTokenizer(incoming.replaceAll(" ",""), operation, true);
+        String current;
+        while (tokenizer.hasMoreTokens()){
+            current = tokenizer.nextToken();
+
+            if(isOperation(current)){
+                parseOperation(current);
+            } else{
+                output.add(current);
+            }
+        }
+        toEmptyStack();
+
+        return output;
     }
 
     private String calculate(){
