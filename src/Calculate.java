@@ -21,8 +21,7 @@ class Calculate {
 
     private static int priority(String str) {
         if(str.equals("*")||str.equals("/")){return 1;}
-        if(str.equals("+")||str.equals("-")){return 2;}
-        return 3;
+        else {return 2;}
     }
 
     private void parseOperation(String str){
