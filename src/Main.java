@@ -20,9 +20,7 @@ public class Main {
             else{
                 System.out.println("Sorry, the string is wrong.");
             }
-
         }
-
     }
 
 
@@ -30,6 +28,6 @@ public class Main {
         str = str.trim();
         Matcher isCorrect = PATTERN_LETTER.matcher(str);
         Matcher isSymbol = START_END_SYMBOL.matcher(str);
-        return !(isCorrect.find() || isSymbol.find());
+        return !(isCorrect.find() || isSymbol.find() || str.length()==0);
     }
 }
