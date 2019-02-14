@@ -4,15 +4,15 @@ import java.util.regex.Pattern;
 
 public class Main {
 
+    private static final Pattern PATTERN_LETTER = Pattern.compile("[А-Я]|[а-я]|[A-Z]|[a-z]|[\\(\\)\\~\\@\\#\\$\\%\\^\\&\\_\\=\\.\\,\\?\\:\\;\\'\\|]");
+    private static final Pattern START_END_SYMBOL = Pattern.compile("^\\D|\\D$");
     public static void main(String[] arg){
+
         Scanner in = new Scanner(System.in);
         while (true){
             String input= in.nextLine();
-
-            Pattern patternLetter = Pattern.compile("[А-Я]|[а-я]|[A-Z]|[a-z]|[\\(\\)\\~\\@\\#\\$\\%\\^\\&\\_\\=\\.\\,\\?\\:\\;\\'\\|]");
-            Pattern endSymbol = Pattern.compile("^\\D|\\D$");
-            Matcher isCorrect = patternLetter.matcher(input);
-            Matcher isSymbol = endSymbol.matcher(input);
+            Matcher isCorrect = PATTERN_LETTER.matcher(input);
+            Matcher isSymbol = START_END_SYMBOL.matcher(input);
             if(isCorrect.find() || isSymbol.find()){
                 System.out.println("Sorry, the string is wrong.");
             }
