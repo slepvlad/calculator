@@ -7,7 +7,7 @@ class Calculate {
     private Deque<String> stack = new ArrayDeque<>();
 
     Calculate(String incoming) {
-        this.incoming = incoming;
+        this.incoming = incoming.replaceAll(" ","");
     }
 
     private boolean isOperation(String str){
@@ -45,7 +45,7 @@ class Calculate {
 
     private List<String> parse(){
 
-        StringTokenizer tokenizer = new StringTokenizer(incoming.replaceAll(" ",""), operation, true);
+        StringTokenizer tokenizer = new StringTokenizer(incoming, operation, true);
         String current;
         while (tokenizer.hasMoreTokens()){
             current = tokenizer.nextToken();
