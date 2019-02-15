@@ -50,6 +50,11 @@ class MainTest {
     }
 
     @Test
+    void wrongEmptyString(){
+        assertFalse(ValidatorUtils.isValid(""));
+    }
+
+    @Test
     void correctCalculationAdd(){
         Calculate task = new Calculate("2+8");
         assertEquals(task.getResult(), "10.0");

@@ -3,21 +3,12 @@ import java.util.regex.Pattern;
 
 public class ValidatorUtils {
 
-    private static final Pattern PATTERN_LETTER = Pattern.compile("[А-Я]|[а-я]|[A-Z]|[a-z]|[\\(\\)\\~\\#\\$\\%\\&\\_\\=\\.\\,\\?\\:\\;\\'\\|]");
-    private static final Pattern START_END_SYMBOL = Pattern.compile("^\\D|\\D$");
-    private static final Pattern TWO_OR_MORE_OPERATION = Pattern.compile("[\\+\\-\\/\\*]{2,}");
+    private static final Pattern WRONG_SYMBOLS = Pattern.compile("^\\D|[^0-9\\+\\-\\/\\*\\^\\@\\s]|\\D$|[\\+\\-\\/\\*]{2,}");
 
 
     public static boolean isValid(String str){
         str = str.trim();
-        if(str.length() == 0){ return false;}
-        Matcher isHasWrongSymbols = PATTERN_LETTER.matcher(str);
-        if(isHasWrongSymbols.find()){return false;}
-        Matcher isHasStartOrEndNotDigital = START_END_SYMBOL.matcher(str);
-        if(isHasStartOrEndNotDigital.find()){return false;}
-        Matcher isTwoOrMoreOperations = TWO_OR_MORE_OPERATION.matcher(str);
-        if(isTwoOrMoreOperations.find()){return false;}
-
-        return true;
+        Matcher isHasWrongSymbols = WRONG_SYMBOLS.matcher(str);
+        return !(str.isEmpty() || isHasWrongSymbols.find());
     }
 }
