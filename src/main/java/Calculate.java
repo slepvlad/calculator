@@ -1,7 +1,10 @@
 
+import operators.*;
+
 import java.util.*;
 
 class Calculate {
+    private static final Map <String, Operator> OPERATORS_MAP = new HashMap<>();
     private static String hiPriorityOperation = "/*^@";
     private static String lowPriorityOperation = "+-";
     private static String operation = hiPriorityOperation + lowPriorityOperation;
@@ -9,6 +12,14 @@ class Calculate {
     private List<String> output = new ArrayList<>();
     private Deque<String> stack = new ArrayDeque<>();
 
+    static {
+        OPERATORS_MAP.put("+", new Add());
+        OPERATORS_MAP.put("-", new Subtraction());
+        OPERATORS_MAP.put("*", new Multiply());
+        OPERATORS_MAP.put("/", new Division());
+        OPERATORS_MAP.put("^", new Pow());
+        OPERATORS_MAP.put("@", new Root());
+    }
     Calculate(String incoming) {
         this.incoming = incoming.replaceAll(" ","");
     }
@@ -68,57 +79,19 @@ class Calculate {
     private String calculate(){
         Deque<Double> stack = new ArrayDeque<>();
         List<String> input = this.parse();
-        Double first;
-        Double second;
+        Operator doCalculate;
         for(String x: input){
-            switch (x) {
-                case "*": {
-                    second = stack.pop();
-                    first = stack.pop();
-                    stack.push(first * second);
-                    break;
-                }
-                case "/": {
-                    second = stack.pop();
-                    first = stack.pop();
-                    stack.push(first / second);
-                    break;
-                }
-                case "-": {
-                    second = stack.pop();
-                    first = stack.pop();
-                    stack.push(first - second);
-                    break;
-                }
-                case "+": {
-                    second = stack.pop();
-                    first = stack.pop();
-                    stack.push(first + second);
-                    break;
-                }
-                case "^":{
-                    second = stack.pop();
-                    first = stack.pop();
-                    stack.push(Math.pow(first, second));
-                    break;
-                }
-                case "@":{
-                    second = stack.pop();
-                    first = stack.pop();
-                    stack.push(Math.pow(first, 1/second));
-                    break;
-                }
-                default:
-                    stack.push(Double.parseDouble(x.trim()));
-                    break;
+            if(isOperation(x)){
+                doCalculate = OPERATORS_MAP.get(x);
+                doCalculate.calculate(stack);
             }
-
+            else{stack.push(Double.parseDouble(x.trim()));}
         }
 
         return stack.pop().toString();
     }
 
-    String getResult(){
+   public String getResult(){
         return this.calculate();
     }
 }

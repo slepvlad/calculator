@@ -20,7 +20,7 @@ public class Main {
                 System.out.println(task0.getResult());
             }
             else{
-                System.out.println("Sorry, the string is wrong.");
+                System.out.println("Извините, строка неккоректна.");
             }
         }
     }
