@@ -5,23 +5,33 @@ import java.util.*;
 
 class Calculate {
     private static final Map <String, Operator> OPERATORS_MAP = new HashMap<>();
-    private static String hiPriorityOperation = "/*^@";
-    private static String lowPriorityOperation = "+-";
-    private static String operation = hiPriorityOperation + lowPriorityOperation;
+   // private static String hiPriorityOperation = "/*^@";
+   //private static String lowPriorityOperation = "+-";
+    private static String operation;
     private String incoming;
     private List<String> output = new ArrayList<>();
     private Deque<String> stack = new ArrayDeque<>();
 
     static {
-        OPERATORS_MAP.put("+", new Add());
-        OPERATORS_MAP.put("-", new Subtraction());
-        OPERATORS_MAP.put("*", new Multiply());
-        OPERATORS_MAP.put("/", new Division());
-        OPERATORS_MAP.put("^", new Pow());
-        OPERATORS_MAP.put("@", new Root());
+        OPERATORS_MAP.put(Add.OPERATION_SIGN, new Add());
+        OPERATORS_MAP.put(Subtraction.OPERATION_SIGN, new Subtraction());
+        OPERATORS_MAP.put(Multiply.OPERATION_SIGN, new Multiply());
+        OPERATORS_MAP.put(Division.OPERATION_SIGN, new Division());
+        OPERATORS_MAP.put(Pow.OPERATION_SIGN, new Pow());
+        OPERATORS_MAP.put(Root.OPERATION_SIGN, new Root());
+        operation = getOperation();
     }
     Calculate(String incoming) {
         this.incoming = incoming.replaceAll(" ","");
+    }
+
+
+    private static String getOperation(){
+        StringBuffer strOperation = new StringBuffer();
+        for(Map.Entry<String, Operator> entry: OPERATORS_MAP.entrySet()){
+            strOperation.append(entry.getKey());
+        }
+        return strOperation.toString();
     }
 
     private boolean isOperation(String str){
@@ -29,8 +39,13 @@ class Calculate {
     }
 
     private static int priority(String str) {
-        if(hiPriorityOperation.contains(str)){return 1;}
-        else {return 2;}
+        int result = 3;
+        for(Map.Entry<String, Operator> entry : OPERATORS_MAP.entrySet()){
+            if(entry.getKey().equals(str)){
+                result =  entry.getValue().getPRIORITY();
+            }
+        }
+        return result;
     }
 
     private void parseOperation(String str){
