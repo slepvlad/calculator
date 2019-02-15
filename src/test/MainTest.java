@@ -1,7 +1,6 @@
 import org.junit.jupiter.api.Test;
 
-import static org.junit.jupiter.api.Assertions.assertFalse;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.*;
 
 class MainTest {
 
@@ -48,6 +47,48 @@ class MainTest {
     @Test
     void wrongStringWithTwoSigns(){
         assertFalse((ValidatorUtils.isValid("2+8**9")));
+    }
+
+    @Test
+    void correctCalculationAdd(){
+        Calculate task = new Calculate("2+8");
+        assertEquals(task.getResult(), "10.0");
+    }
+
+    @Test
+    void correctCalculationMultiply(){
+        Calculate task = new Calculate("2*8");
+        assertEquals(task.getResult(), "16.0");
+    }
+
+    @Test
+    void correctCalculationDivision(){
+        Calculate task = new Calculate("8/2");
+        assertEquals(task.getResult(), "4.0");
+    }
+
+    @Test
+    void correctCalculationSubtraction(){
+        Calculate task = new Calculate("8-2");
+        assertEquals(task.getResult(), "6.0");
+    }
+
+    @Test
+    void correctCalculationPow(){
+        Calculate task = new Calculate("2^8");
+        assertEquals(task.getResult(), "256.0");
+    }
+
+    @Test
+    void correctCalculationRoot(){
+        Calculate task = new Calculate("9@2");
+        assertEquals(task.getResult(), "3.0");
+    }
+
+    @Test
+    void correctCalculationWithOperationPriority(){
+        Calculate task = new Calculate("2+9 ^ 2 - 8@3 + 2*5 + 10/5");
+        assertEquals(task.getResult(), "93.0");
     }
 
 
