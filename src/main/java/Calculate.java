@@ -25,12 +25,7 @@ class Calculate {
     }
 
     private boolean isOperation(String str){
-        for(int i = 0; i < operation.length(); i++){
-            if(str.charAt(0) == operation.charAt(i)){
-                return true;
-            }
-        }
-        return false;
+        return operation.contains(str);
     }
 
     private static int priority(String str) {
